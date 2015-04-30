@@ -1,6 +1,7 @@
 class MoosController < ApplicationController
   before_action :set_moo, only: [:show, :edit, :update, :destroy]
-
+  before_filter :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  
   respond_to :html
 
   def index
@@ -22,6 +23,7 @@ class MoosController < ApplicationController
 
   def create
     @moo = Moo.new(moo_params)
+    @moo. user_id = current_user.id
     @moo.save
     respond_with(@moo)
   end
